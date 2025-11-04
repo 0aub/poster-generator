@@ -20,7 +20,7 @@ const TemplateSelector = ({
 }: TemplateSelectorProps) => {
   return (
     <div className="space-y-2">
-      <label className="text-sm font-semibold text-foreground">
+      <label className="text-sm font-semibold text-foreground text-right block" dir="rtl">
         اختر القالب / Select Template
       </label>
       <Select value={selectedTemplate} onValueChange={onTemplateChange}>
