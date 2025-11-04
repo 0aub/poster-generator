@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 45 40% 96%;
+    --foreground: 180 30% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 180 30% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 180 30% 15%;
+
+    --primary: 140 70% 40%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 140 50% 92%;
+    --secondary-foreground: 140 70% 25%;
+
+    --muted: 45 30% 88%;
+    --muted-foreground: 180 20% 45%;
+
+    --accent: 140 60% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 140 30% 85%;
+    --input: 140 30% 90%;
+    --ring: 140 70% 40%;
+
+    --radius: 0.75rem;
+    
+    --poster-bg: 45 40% 92%;
+    --poster-title: 140 65% 45%;
+    --poster-text: 180 30% 20%;
+    --poster-accent: 140 70% 35%;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 180 25% 10%;
+    --foreground: 45 40% 95%;
+
+    --card: 180 20% 15%;
+    --card-foreground: 45 40% 95%;
+
+    --popover: 180 20% 15%;
+    --popover-foreground: 45 40% 95%;
+
+    --primary: 140 60% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 180 20% 20%;
+    --secondary-foreground: 45 40% 95%;
+
+    --muted: 180 20% 20%;
+    --muted-foreground: 45 20% 65%;
+
+    --accent: 140 55% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 180 20% 25%;
+    --input: 180 20% 25%;
+    --ring: 140 60% 50%;
+    
+    --poster-bg: 180 20% 18%;
+    --poster-title: 140 60% 55%;
+    --poster-text: 45 30% 85%;
+    --poster-accent: 140 55% 50%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
