@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   ui:
     build:
@@ -7,12 +5,18 @@ services:
       dockerfile: dockerfile
     container_name: poster-generator-ui
     ports:
-      - "8080:8080"
+      - "8080:8080"  # Change the left port to access on different port (e.g., "3000:8080")
     environment:
       - VITE_OPENAI_API_KEY=${OPENAI_API_KEY}
       - VITE_GEMINI_API_KEY=${GEMINI_API_KEY}
     env_file:
       - .env
+    volumes:
+      # Mount src and public folders for hot reloading
+      - ./ui/src:/app/src
+      - ./ui/public:/app/public
+      # Prevent node_modules from being overwritten
+      - /app/node_modules
     restart: unless-stopped
     networks:
       - poster-network

@@ -15,8 +15,8 @@ const Template2 = ({ data }: Template2Props) => {
             <h1 className="text-4xl font-bold mb-2">{data.title || "دعوة عامة"}</h1>
             <p className="text-xl opacity-90">{data.subtitle || "عنوان الفعالية"}</p>
           </div>
-          <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center">
-            <div className="text-3xl">🌾</div>
+          <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shrink-0">
+            <span className="text-3xl flex items-center justify-center w-full h-full">🌾</span>
           </div>
         </div>
       </div>
@@ -106,8 +106,11 @@ const Template2 = ({ data }: Template2Props) => {
                   <p className="text-xl font-bold">{data.contactEmail}</p>
                 </div>
               </div>
-              <div className="w-24 h-24 bg-white rounded-xl flex items-center justify-center">
-                <div className="text-xs text-center text-primary font-bold">QR<br/>Code</div>
+              <div className="w-24 h-24 bg-white rounded-xl flex items-center justify-center shrink-0">
+                <span className="text-xs text-center text-primary font-bold flex flex-col items-center justify-center w-full h-full leading-tight">
+                  <span>QR</span>
+                  <span>Code</span>
+                </span>
               </div>
             </div>
           </div>

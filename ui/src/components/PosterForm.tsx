@@ -3,7 +3,17 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { PosterData } from "@/types/poster";
-import { Upload, X } from "lucide-react";
+import { Upload, X, Sparkles, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { enhanceText, AIProvider } from "@/utils/aiEnhancement";
+import { toast } from "@/hooks/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface PosterFormProps {
   data: PosterData;
@@ -12,6 +22,8 @@ interface PosterFormProps {
 }
 
 const PosterForm = ({ data, onChange, templateId }: PosterFormProps) => {
+  const [aiProvider, setAiProvider] = useState<AIProvider>('gemini');
+  const [isEnhancing, setIsEnhancing] = useState(false);
   const handleChange = (field: keyof PosterData, value: string | string[]) => {
     onChange({ ...data, [field]: value });
   };
@@ -43,15 +55,96 @@ const PosterForm = ({ data, onChange, templateId }: PosterFormProps) => {
     handleChange("points", newPoints);
   };
 
+  const handleEnhance = async () => {
+    if (!data.description) {
+      toast({
+        title: "خطأ",
+        description: "يرجى إدخال الوصف أولاً",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsEnhancing(true);
+    try {
+      const enhanced = await enhanceText({
+        description: data.description,
+        additionalInfo: data.additionalInfo || "",
+        provider: aiProvider,
+      });
+
+      onChange({
+        ...data,
+        description: enhanced.description,
+        additionalInfo: enhanced.additionalInfo,
+      });
+
+      toast({
+        title: "تم التحسين بنجاح",
+        description: `تم تحسين المحتوى باستخدام ${aiProvider === 'openai' ? 'OpenAI' : 'Gemini'}`,
+      });
+    } catch (error) {
+      toast({
+        title: "خطأ في التحسين",
+        description: error instanceof Error ? error.message : "حدث خطأ أثناء تحسين المحتوى",
+        variant: "destructive",
+      });
+    } finally {
+      setIsEnhancing(false);
+    }
+  };
+
   const showImageUpload = templateId === "template4";
   const showPoints = templateId === "template4";
   const showAdditionalInfo = templateId !== "template4";
 
   return (
     <div className="space-y-6 p-6 bg-card rounded-lg border border-border">
+      {/* AI Enhancement Section */}
+      <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
+        <div className="flex items-center gap-2 mb-3" dir="rtl">
+          <Sparkles className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+          <h3 className="text-sm font-bold text-purple-900 dark:text-purple-100">
+            تحسين المحتوى بالذكاء الاصطناعي
+          </h3>
+        </div>
+        <div className="flex gap-3">
+          <Select value={aiProvider} onValueChange={(value: AIProvider) => setAiProvider(value)}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="اختر المزود" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="gemini">Google Gemini</SelectItem>
+              <SelectItem value="openai">OpenAI GPT</SelectItem>
+            </SelectContent>
+          </Select>
+          <Button
+            onClick={handleEnhance}
+            disabled={isEnhancing || !data.description}
+            className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+          >
+            {isEnhancing ? (
+              <>
+                <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                جاري التحسين...
+              </>
+            ) : (
+              <>
+                <Sparkles className="ml-2 h-4 w-4" />
+                تحسين الوصف والمعلومات
+              </>
+            )}
+          </Button>
+        </div>
+        <p className="text-xs text-muted-foreground mt-2">
+          سيتم تحسين الوصف والمعلومات الإضافية تلقائياً
+        </p>
+      </div>
+
+      <div className="h-px bg-border" />
       <div className="space-y-2">
-        <Label htmlFor="title" className="text-sm font-semibold">
-          العنوان الرئيسي / Main Title
+        <Label htmlFor="title" className="text-sm font-semibold text-right block" dir="rtl">
+          العنوان الرئيسي
         </Label>
         <Input
           id="title"
@@ -64,8 +157,8 @@ const PosterForm = ({ data, onChange, templateId }: PosterFormProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="subtitle" className="text-sm font-semibold">
-          العنوان الفرعي / Subtitle
+        <Label htmlFor="subtitle" className="text-sm font-semibold text-right block" dir="rtl">
+          العنوان الفرعي
         </Label>
         <Input
           id="subtitle"
@@ -78,8 +171,8 @@ const PosterForm = ({ data, onChange, templateId }: PosterFormProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="description" className="text-sm font-semibold">
-          الوصف / Description
+        <Label htmlFor="description" className="text-sm font-semibold text-right block" dir="rtl">
+          الوصف
         </Label>
         <Textarea
           id="description"
@@ -93,8 +186,8 @@ const PosterForm = ({ data, onChange, templateId }: PosterFormProps) => {
 
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="date" className="text-sm font-semibold">
-            التاريخ / Date
+          <Label htmlFor="date" className="text-sm font-semibold text-right block" dir="rtl">
+            التاريخ
           </Label>
           <Input
             id="date"
@@ -107,8 +200,8 @@ const PosterForm = ({ data, onChange, templateId }: PosterFormProps) => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="time" className="text-sm font-semibold">
-            الوقت / Time
+          <Label htmlFor="time" className="text-sm font-semibold text-right block" dir="rtl">
+            الوقت
           </Label>
           <Input
             id="time"
@@ -122,8 +215,8 @@ const PosterForm = ({ data, onChange, templateId }: PosterFormProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="location" className="text-sm font-semibold">
-          الموقع / Location
+        <Label htmlFor="location" className="text-sm font-semibold text-right block" dir="rtl">
+          الموقع
         </Label>
         <Input
           id="location"
@@ -136,8 +229,8 @@ const PosterForm = ({ data, onChange, templateId }: PosterFormProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="speaker" className="text-sm font-semibold">
-          المتحدث / Speaker (اختياري)
+        <Label htmlFor="speaker" className="text-sm font-semibold text-right block" dir="rtl">
+          المتحدث (اختياري)
         </Label>
         <Input
           id="speaker"
@@ -150,8 +243,8 @@ const PosterForm = ({ data, onChange, templateId }: PosterFormProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="contactEmail" className="text-sm font-semibold">
-          البريد الإلكتروني / Email (اختياري)
+        <Label htmlFor="contactEmail" className="text-sm font-semibold text-right block" dir="rtl">
+          البريد الإلكتروني (اختياري)
         </Label>
         <Input
           id="contactEmail"
@@ -165,8 +258,8 @@ const PosterForm = ({ data, onChange, templateId }: PosterFormProps) => {
 
       {showImageUpload && (
         <div className="space-y-2">
-          <Label className="text-sm font-semibold">
-            صورة الملصق / Poster Image (اختياري)
+          <Label className="text-sm font-semibold text-right block" dir="rtl">
+            صورة الملصق (اختياري)
           </Label>
           <div className="space-y-3">
             {data.image && (
@@ -195,8 +288,8 @@ const PosterForm = ({ data, onChange, templateId }: PosterFormProps) => {
 
       {showPoints && (
         <div className="space-y-2">
-          <Label className="text-sm font-semibold">
-            النقاط الرئيسية / Key Points (اختياري)
+          <Label className="text-sm font-semibold text-right block" dir="rtl">
+            النقاط الرئيسية (اختياري)
           </Label>
           <div className="space-y-3">
             {(data.points || []).map((point, index) => (
@@ -232,8 +325,8 @@ const PosterForm = ({ data, onChange, templateId }: PosterFormProps) => {
 
       {showAdditionalInfo && (
         <div className="space-y-2">
-          <Label htmlFor="additionalInfo" className="text-sm font-semibold">
-            معلومات إضافية / Additional Info (اختياري)
+          <Label htmlFor="additionalInfo" className="text-sm font-semibold text-right block" dir="rtl">
+            معلومات إضافية (اختياري)
           </Label>
           <Textarea
             id="additionalInfo"

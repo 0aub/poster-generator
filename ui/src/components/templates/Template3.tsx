@@ -7,15 +7,15 @@ interface Template3Props {
 
 const Template3 = ({ data }: Template3Props) => {
   return (
-    <div className="w-[800px] h-[1200px] bg-white relative overflow-hidden" dir="rtl">
+    <div className="w-[800px] h-[1200px] bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden" dir="rtl">
       {/* Decorative Header Background */}
       <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-to-br from-primary via-accent to-primary opacity-90" />
       
       {/* Header Content */}
       <div className="relative z-10 pt-12 px-12">
         <div className="flex justify-between items-start mb-8">
-          <div className="w-24 h-24 bg-white rounded-2xl shadow-lg flex items-center justify-center">
-            <div className="text-4xl">🌾</div>
+          <div className="w-24 h-24 bg-white rounded-2xl shadow-lg flex items-center justify-center shrink-0">
+            <span className="text-4xl flex items-center justify-center w-full h-full">🌾</span>
           </div>
           <div className="text-right text-white">
             <p className="text-lg font-bold">وزارة البيئة والمياه والزراعة</p>
@@ -122,9 +122,9 @@ const Template3 = ({ data }: Template3Props) => {
               </>
             )}
           </div>
-          <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center shadow-lg">
-            <div className="text-center text-primary text-xs font-bold">
-              <div className="text-2xl mb-1">📱</div>
+          <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center shadow-lg shrink-0">
+            <div className="text-center text-primary text-xs font-bold flex flex-col items-center justify-center w-full h-full">
+              <div className="text-2xl mb-1 flex items-center justify-center">📱</div>
               <div>امسح للتسجيل</div>
             </div>
           </div>

@@ -7,15 +7,15 @@ interface Template1Props {
 
 const Template1 = ({ data }: Template1Props) => {
   return (
-    <div className="w-[800px] h-[1200px] bg-poster-bg relative overflow-hidden" dir="rtl">
+    <div className="w-[800px] h-[1200px] bg-gradient-to-br from-blue-50 via-white to-green-50 relative overflow-hidden" dir="rtl">
       {/* Header with Logo */}
       <div className="absolute top-0 left-0 right-0 bg-white/80 backdrop-blur-sm p-6 flex justify-between items-center border-b-4 border-primary">
         <div className="text-right">
           <p className="text-sm text-poster-text font-semibold">الإدارة العامة للاتصال المؤسسي والإعلام</p>
           <p className="text-xs text-muted-foreground">إدارة التواصل الداخلي</p>
         </div>
-        <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center">
-          <div className="text-white text-2xl font-bold">🌾</div>
+        <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center shrink-0">
+          <span className="text-2xl flex items-center justify-center w-full h-full">🌾</span>
         </div>
       </div>
 
@@ -102,8 +102,8 @@ const Template1 = ({ data }: Template1Props) => {
               <p className="text-sm opacity-90">{data.contactEmail}</p>
             )}
           </div>
-          <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center">
-            <div className="text-xs text-center text-primary font-bold">QR Code</div>
+          <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center shrink-0">
+            <span className="text-xs text-center text-primary font-bold flex items-center justify-center w-full h-full">QR Code</span>
           </div>
         </div>
       </div>

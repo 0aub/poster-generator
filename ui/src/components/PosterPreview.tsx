@@ -10,19 +10,39 @@ const PosterPreview = ({ template, data }: PosterPreviewProps) => {
   const previewRef = useRef<HTMLDivElement>(null);
   const TemplateComponent = template.component;
 
+  // Render two versions: one for display (scaled), one for export (hidden, full-size)
   return (
-    <div className="flex flex-col items-center">
-      <div 
-        ref={previewRef} 
+    <>
+      {/* Hidden full-size version for clean export */}
+      <div
         id="poster-preview"
-        className="shadow-2xl rounded-lg overflow-hidden transform scale-75 origin-top"
-        style={{ 
-          transformOrigin: 'top center',
+        style={{
+          position: 'absolute',
+          left: '-9999px',
+          width: '800px',
+          height: '1200px',
         }}
       >
         <TemplateComponent data={data} />
       </div>
-    </div>
+
+      {/* Visible scaled version for display */}
+      <div className="flex items-start justify-center w-full h-full py-4">
+        <div
+          ref={previewRef}
+          className="shadow-2xl rounded-lg overflow-hidden"
+          style={{
+            width: '400px',
+            height: '600px',
+            transformOrigin: 'top center',
+          }}
+        >
+          <div style={{ transform: 'scale(0.5)', transformOrigin: 'top left', width: '800px', height: '1200px' }}>
+            <TemplateComponent data={data} />
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

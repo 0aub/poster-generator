@@ -2,7 +2,7 @@ import html2canvas from "html2canvas";
 
 export const exportPosterAsPNG = async (elementId: string = "poster-preview") => {
   const element = document.getElementById(elementId);
-  
+
   if (!element) {
     throw new Error("Poster element not found");
   }
@@ -10,11 +10,13 @@ export const exportPosterAsPNG = async (elementId: string = "poster-preview") =>
   try {
     // Create canvas from the poster element
     const canvas = await html2canvas(element, {
-      scale: 2, // Higher quality
+      scale: 3, // 3x resolution for high quality (2400x3600)
       useCORS: true,
       allowTaint: true,
       backgroundColor: null,
       logging: false,
+      width: 800, // Explicitly set dimensions
+      height: 1200,
     });
 
     // Convert to blob

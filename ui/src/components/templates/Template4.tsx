@@ -77,17 +77,17 @@ const Template4 = ({ data }: Template4Props) => {
         {/* Event Details */}
         <div className="grid grid-cols-3 gap-4">
           <div className="bg-card/90 backdrop-blur-sm rounded-xl p-6 text-center border border-white/20">
-            <div className="text-4xl mb-3">📅</div>
+            <div className="text-4xl mb-3 flex items-center justify-center">📅</div>
             <div className="text-sm text-muted-foreground mb-2">التاريخ</div>
             <div className="text-lg font-semibold text-foreground" dir="rtl">{data.date}</div>
           </div>
           <div className="bg-card/90 backdrop-blur-sm rounded-xl p-6 text-center border border-white/20">
-            <div className="text-4xl mb-3">⏰</div>
+            <div className="text-4xl mb-3 flex items-center justify-center">⏰</div>
             <div className="text-sm text-muted-foreground mb-2">الوقت</div>
             <div className="text-lg font-semibold text-foreground" dir="rtl">{data.time}</div>
           </div>
           <div className="bg-card/90 backdrop-blur-sm rounded-xl p-6 text-center border border-white/20">
-            <div className="text-4xl mb-3">📍</div>
+            <div className="text-4xl mb-3 flex items-center justify-center">📍</div>
             <div className="text-sm text-muted-foreground mb-2">المكان</div>
             <div className="text-lg font-semibold text-foreground" dir="rtl">{data.location}</div>
           </div>
